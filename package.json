@@ -4,7 +4,8 @@
   "description": "data visualization (svg &amp; gsap)",
   "main": "index.js",
   "scripts": {
-    "start": "gulp watch"
+    "start": "webpack-dev-server --mode development --open --hot",
+    "build": "webpack --mode production"
   },
   "repository": {
     "type": "git",
@@ -18,10 +19,16 @@
   },
   "homepage": "https://github.com/SerjBaturin/info#readme",
   "devDependencies": {
-    "browser-sync": "^2.26.7",
-    "gulp": "^4.0.2",
-    "gulp-autoprefixer": "^7.0.1",
-    "gulp-cli": "^2.2.0",
-    "gulp-sass": "^4.0.2"
+    "@babel/cli": "^7.7.5",
+    "@babel/core": "^7.7.5",
+    "@babel/preset-env": "^7.7.5",
+    "babel-loader": "^8.0.6",
+    "path": "^0.12.7",
+    "webpack": "^4.41.2",
+    "webpack-cli": "^3.3.10",
+    "webpack-dev-server": "^3.9.0"
+  },
+  "dependencies": {
+    "d3": "^5.14.2"
   }
 }
