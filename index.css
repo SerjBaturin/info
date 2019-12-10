@@ -1,7 +1,14 @@
 body {
   display: flex;
   justify-content: center;
+  flex-wrap: wrap;
   margin: 0;
+}
+
+h1 {
+  width: 100%;
+  text-align: center;
+  color: teal;
 }
 
 svg {

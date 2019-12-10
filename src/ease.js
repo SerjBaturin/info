@@ -49,6 +49,7 @@ const h = 300 - margin.top - margin.bottom
 // Define SVG element
 const svg = select("body")
   .append("svg")
+  .attr("class", "ease")
   .attr("width", w + margin.left + margin.right)
   .attr("height", h + margin.top + margin.bottom)
   .append("g")
@@ -73,7 +74,7 @@ const easeRender = () => {
     .enter()
     .append("rect")
 
-  select(window).on("load", () => {
+  select(".ease").on("load", () => {
     setInterval(() => {
       const dataset = []
       const arrayLength = 20
