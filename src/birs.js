@@ -32,17 +32,19 @@ const yScale = scaleLinear()
   .range([h, 0])
 
 // Barchart
-const birs = () => {
+const birsRender = () => {
   const g = svg.append("g")
 
   // barWidth
   const barWitdh = 1
 
   // Animation
+  const dataset = []
+  
   select(".birs").on("load", () => {
-    const dataset = []
     setInterval(() => {
       dataset.push(Math.floor(Math.random() * 250))
+      
       g.selectAll("rect")
         .data(dataset)
         .enter()
@@ -70,4 +72,4 @@ const birs = () => {
   svg.append("g").call(yAxis)
 }
 
-export default birs
+export default birsRender

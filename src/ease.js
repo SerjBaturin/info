@@ -1,14 +1,4 @@
-import {
-  select,
-  scaleLinear,
-  axisLeft,
-  scaleBand,
-  axisBottom,
-  max,
-  easeLinear,
-  easeBounce,
-  easeCircle
-} from "d3"
+import { select, scaleLinear, max, easeCircle } from "d3"
 
 // Dataset
 const dataset = [
@@ -36,10 +26,10 @@ const dataset = [
 
 // Margin for margin convention
 const margin = {
-  left: 20,
-  right: 20,
-  top: 20,
-  bottom: 20
+  left: 0,
+  right: 0,
+  top: 0,
+  bottom: 0
 }
 
 // Inner width & height
