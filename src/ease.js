@@ -84,7 +84,7 @@ const easeRender = () => {
         .attr("height", d => yScale(d))
         .attr("fill", d => (d > 80 || d < 20 ? "red" : "orange"))
         .attr("stroke", "black")
-    }, 1000)
+    }, 1500)
   })
 }
 

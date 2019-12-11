@@ -1,4 +1,4 @@
-import { select, scaleLinear, axisLeft, axisBottom } from "d3"
+import { select, scaleLinear, axisLeft, axisBottom, max } from "d3"
 
 // Margin for margin convention
 const margin = {
@@ -35,29 +35,31 @@ const yScale = scaleLinear()
 const birsRender = () => {
   const g = svg.append("g")
 
-  // barWidth
-  const barWitdh = 1
+  // Dataset
+  const dataset = []
 
   // Animation
-  const dataset = []
-  
   select(".birs").on("load", () => {
+    // barWidth
+    const barWitdh = 5
     setInterval(() => {
       dataset.push(Math.floor(Math.random() * 250))
-      
+
       g.selectAll("rect")
         .data(dataset)
         .enter()
         .append("rect")
         .transition()
-        .duration(500)
+        .duration(800)
         .attr("x", (d, i) => i * barWitdh)
         .attr("y", d => d)
         .attr("width", barWitdh)
         .attr("height", d => yScale(d))
         .attr("fill", "rgba(0,0,0,.8)")
-    }, 500)
+        .attr("stroke", "#fff")
+    }, 2000)
   })
+
   // Axis
   const xAxis = axisBottom(xScale)
   const yAxis = axisLeft(yScale)
