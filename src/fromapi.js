@@ -107,6 +107,7 @@ const fromapiRender = () => {
         .attr("y", d => yScale(d.number))
         .attr("width", w / data.length)
         .attr("height", d => h - yScale(d.number))
+        
 
       //Axises
       select(".x-axis")

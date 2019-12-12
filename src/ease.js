@@ -1,35 +1,22 @@
-import { select, scaleLinear, max, easeCircle } from "d3"
+import {
+  select,
+  scaleLinear,
+  max,
+  easeCircle,
+  axisBottom,
+  axisLeft,
+  merge
+} from "d3"
 
 // Dataset
-const dataset = [
-  67,
-  49,
-  77,
-  21,
-  6,
-  30,
-  38,
-  78,
-  55,
-  12,
-  69,
-  73,
-  52,
-  12,
-  98,
-  12,
-  79,
-  48,
-  93,
-  50
-]
+const dataset = [100, 50]
 
 // Margin for margin convention
 const margin = {
-  left: 0,
-  right: 0,
-  top: 0,
-  bottom: 0
+  left: 30,
+  right: 30,
+  top: 30,
+  bottom: 30
 }
 
 // Inner width & height
@@ -50,12 +37,39 @@ const xScale = scaleLinear()
   .domain([0, max(dataset)])
   .range([0, w])
 
-// X Scale
+// Y Scale
 const yScale = scaleLinear()
   .domain([0, max(dataset)])
   .range([0, h])
 
-// Barchart
+// xAxisScale
+const xAxisScale = scaleLinear()
+  .domain([0, dataset.length])
+  .range([0, w])
+
+// yAxisScale
+const yAxisScale = scaleLinear()
+  .domain([0, max(dataset)])
+  .range([h, 0])
+
+// Axises
+const xAxis = axisBottom(xAxisScale)
+const yAxis = axisLeft(yAxisScale)
+
+// x Axis CALL
+svg
+  .append("g")
+  .attr("class", "x-fromapi-axis")
+  .call(xAxis)
+  .attr("transform", `translate(0, ${h})`)
+
+// y Axis CALL
+svg
+  .append("g")
+  .attr("class", "y-fromapi-axis")
+  .call(yAxis)
+
+// EASERENDER ()
 const easeRender = () => {
   const g = svg.append("g")
 
@@ -63,28 +77,47 @@ const easeRender = () => {
     .data(dataset)
     .enter()
     .append("rect")
+    .attr("x", (d, i) => (i * w) / dataset.length)
+    .attr("y", d => h - yScale(d))
+    .attr("width", 20)
+    .attr("height", d => yScale(d))
 
+  // UPDATES
   select(".ease").on("load", () => {
     setInterval(() => {
       const dataset = []
-      const arrayLength = 20
+      const arrayLength = Math.random() * 10
       for (let i = 0; i < arrayLength; i++) {
         let newNumber = Math.floor(Math.random() * 100)
         dataset.push(newNumber)
       }
+      console.log(dataset)
+      // Axises Scale
+      xAxisScale.domain([0, dataset.length]).range([0, w])
+      yAxisScale.domain([0, max(dataset)]).range([h, 0])
 
       g.selectAll("rect")
-        .data(dataset)
+        .data(dataset, (d, i) => d * (i + 1))
+        .enter()
+        .append("rect")
+        .transition()
+        .duration(1500)
+        .attr("x", (d, i) => (i * w) / dataset.length)
+        .attr("y", d => h - yScale(d))
+        .attr("width", 20)
+        .attr("height", d => yScale(d))
+        .attr("stroke", "orange")
+
+      // Axises
+      select(".x-fromapi-axis")
         .transition()
         .duration(500)
-        .ease(easeCircle)
-        .attr("x", d => w - xScale(d))
-        .attr("y", d => h - yScale(d))
-        .attr("width", 10)
-        .attr("height", d => yScale(d))
-        .attr("fill", d => (d > 80 || d < 20 ? "red" : "orange"))
-        .attr("stroke", "black")
-    }, 1500)
+        .call(xAxis)
+      select(".y-fromapi-axis")
+        .transition()
+        .duration(500)
+        .call(yAxis)
+    }, 5000)
   })
 }
 

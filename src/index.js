@@ -3,9 +3,11 @@ import scatterplotRender from "./scatterplot"
 import birsRender from "./birs"
 import easeRender from "./ease"
 import causeRender from "./cause"
+import circlesRender from "./circles"
 
 fromapiRender()
 scatterplotRender()
 birsRender()
 easeRender()
 causeRender()
+circlesRender()
