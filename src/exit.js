@@ -2,8 +2,9 @@ import { select, scaleLinear, axisLeft, axisBottom, max } from "d3"
 
 const margin = { top: 20, right: 20, left: 40, bottom: 20 }
 
-const w = 400
-const h = 300
+// Inner width & height
+const w = 400 - margin.left - margin.right
+const h = 300 - margin.top - margin.bottom
 
 const dataset = [50, 100, 60, 20, 10, 80, 40]
 
@@ -59,7 +60,7 @@ const exitRender = () => {
       for (let i = 0; i < arrayLength; i++) {
         data.push(Math.random().toFixed(1) * 100)
       }
-      console.log(data)
+
       const bars = svg.selectAll("rect").data(data)
 
       xScale.domain([0, max(data)]).range([0, w])

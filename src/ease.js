@@ -1,12 +1,4 @@
-import {
-  select,
-  scaleLinear,
-  max,
-  easeCircle,
-  axisBottom,
-  axisLeft,
-  merge
-} from "d3"
+import { select, scaleLinear, max, axisBottom, axisLeft } from "d3"
 
 // Dataset
 const dataset = [100, 50]
@@ -81,6 +73,7 @@ const easeRender = () => {
     .attr("y", d => h - yScale(d))
     .attr("width", 20)
     .attr("height", d => yScale(d))
+    .attr("stroke", "orange")
 
   // UPDATES
   select(".ease").on("load", () => {
@@ -91,22 +84,32 @@ const easeRender = () => {
         let newNumber = Math.floor(Math.random() * 100)
         dataset.push(newNumber)
       }
-      console.log(dataset)
+
       // Axises Scale
       xAxisScale.domain([0, dataset.length]).range([0, w])
       yAxisScale.domain([0, max(dataset)]).range([h, 0])
 
-      g.selectAll("rect")
-        .data(dataset, (d, i) => d * (i + 1))
+      const bars = g.selectAll("rect").data(dataset)
+
+      bars
         .enter()
         .append("rect")
+        .merge(bars)
         .transition()
+        .delay((d, i) => (i / dataset.length) * 500)
         .duration(1500)
         .attr("x", (d, i) => (i * w) / dataset.length)
         .attr("y", d => h - yScale(d))
         .attr("width", 20)
         .attr("height", d => yScale(d))
         .attr("stroke", "orange")
+      bars
+        .exit()
+        .transition()
+        .duration(500)
+        .attr("width", 0)
+        .attr("height", 0)
+        .remove()
 
       // Axises
       select(".x-fromapi-axis")
@@ -117,7 +120,7 @@ const easeRender = () => {
         .transition()
         .duration(500)
         .call(yAxis)
-    }, 5000)
+    }, 3000)
   })
 }
 
