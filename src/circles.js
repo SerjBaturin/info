@@ -1,25 +1,18 @@
 import { select, pie, arc, max, ascending, descending, entries } from "d3"
-
+import { getSVG } from "./common"
 // Margin for margin convention
 const margin = {
-  left: 20,
-  right: 20,
-  top: 20,
-  bottom: 20
+  left: 0,
+  right: 0,
+  top: 0,
+  bottom: 0
 }
 
-// Inner width & height
-const w = 400 - margin.left - margin.right
-const h = 300 - margin.top - margin.bottom
-
-// Define SVG element
-const svg = select("body")
-  .append("svg")
-  .attr("class", "arcs")
-  .attr("width", w + margin.left + margin.right)
-  .attr("height", h + margin.top + margin.bottom)
-  .append("g")
-  .attr("transform", `translate(${margin.left}, ${margin.top})`)
+// Define SVG selection & width, height, margins
+const SVG = getSVG(400, 300, "arcs", { margin })
+const w = SVG.w
+const h = SVG.h
+const svg = SVG.svg
 
 // circleRender for EXPORT
 const circlesRender = () => {
@@ -69,13 +62,10 @@ const circlesRender = () => {
     arcs
       .enter()
       .append("g")
-      .merge(arcs)
       .attr("transform", `translate(${w / 2}, ${h / 2})`)
       .append("path")
-      .merge(arcs)
       .attr("fill", (d, i) => `rgba(0,0,0,0.${i + 1})`)
       .attr("d", (d, i) => ARC(d, i))
-    arcs.exit().remove()
   })
 }
 
